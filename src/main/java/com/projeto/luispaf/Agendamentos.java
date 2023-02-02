@@ -13,7 +13,7 @@ import com.projeto.luispaf.service.impl.UsuarioServiceImpl;
 
 @Component
 public class Agendamentos {
-
+//deu certo commit
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
 	@Autowired
