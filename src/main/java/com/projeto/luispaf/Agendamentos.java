@@ -29,25 +29,22 @@ public class Agendamentos {
 	/**
 	 * Desloga o usuario a cada 3 horas
 	 */
-	@Scheduled(fixedDelay = TRES_HORAS)
-	public void deslogarUsuario() throws InterruptedException {
-		List<Usuario> lista = usuarioServiceImpl.getUsuariosAtivos();
-		lista.forEach(usu -> {
-			usu.setLogado(DESLOGADO);
-			usuarioServiceImpl.salvar(usu);
-		});
-	}
+	/*
+	 * @Scheduled(fixedDelay = TRES_HORAS) public void deslogarUsuario() throws
+	 * InterruptedException { List<Usuario> lista =
+	 * usuarioServiceImpl.getUsuariosAtivos(); lista.forEach(usu -> {
+	 * usu.setLogado(DESLOGADO); usuarioServiceImpl.salvar(usu); }); }
+	 */
 
 	/**
 	 * Inativa as agendas dos dias anteriores
 	 */
 	
-	 @Scheduled(fixedDelay = TRES_HORAS)
-	 public void InativarAgendas() throws InterruptedException{ 
-		 List<Agenda> lista = agendaRepository.getClientesAgendadosDiasAnteriores(); 
-		 lista.forEach(ag -> {
-			 ag.setStatus("INATIVO"); agendaRepository.save(ag); 
-		 }); 
-	 }
+	/*
+	 * @Scheduled(fixedDelay = TRES_HORAS) public void InativarAgendas() throws
+	 * InterruptedException{ List<Agenda> lista =
+	 * agendaRepository.getClientesAgendadosDiasAnteriores(); lista.forEach(ag -> {
+	 * ag.setStatus("INATIVO"); agendaRepository.save(ag); }); }
+	 */
 	
 }
