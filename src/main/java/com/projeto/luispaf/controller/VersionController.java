@@ -27,7 +27,8 @@ public class VersionController {
 	@GetMapping("/status")
 	public ResponseEntity<?> getTotalPacoteDoDia() throws Exception{
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		List<Agenda> lista = agendaRepository.getClientesAgendadosDiasAnteriores();
+		System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
 		return new ResponseEntity<>("Tudo OK", HttpStatus.OK);
 	}
 	
