@@ -31,8 +31,12 @@ public class VersionController {
 	
 	@GetMapping("/agendadosDiasNteriores")
 	public ResponseEntity<?> getAgendadosDiasNteriores() throws Exception{
-		
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		List<Agenda> lista = agendaRepository.getClientesAgendadosDiasAnteriores();
+		
+		System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+		System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
 		
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
