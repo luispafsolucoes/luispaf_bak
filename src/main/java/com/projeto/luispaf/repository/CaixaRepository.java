@@ -32,7 +32,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 Double getTotalprodutoDoDia();
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*) FROM luispaf.caixa c \r\n"
+			 value = "SELECT count(*) FROM caixa c \r\n"
 			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')"		 
 			 )
 	 Long getQtdeCaixaCriadoDataAtual();
