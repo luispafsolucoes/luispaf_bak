@@ -31,7 +31,7 @@ public class VersionController {
 	public ResponseEntity<?> getTotalPacoteDoDia() throws Exception{
 		try {
 			List<Cidade> lista = repository.listarCidadeOrdenadoPornome();			
-			return new ResponseEntity<>("OKKKKKKKKK", HttpStatus.OK);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
