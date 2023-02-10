@@ -24,6 +24,9 @@ public class VersionController {
 	@Autowired
 	CidadeRepository repository;
 
+	
+	
+	//Usado apenas para testes no heroku
 	@GetMapping("/status")
 	public ResponseEntity<?> getTotalPacoteDoDia() throws Exception{
 		try {

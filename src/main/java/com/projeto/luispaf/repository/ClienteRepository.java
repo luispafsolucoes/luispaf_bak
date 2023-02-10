@@ -27,14 +27,14 @@ public interface ClienteRepository  extends  JpaRepository<Cliente, Long>, JpaSp
 	 List<Cliente> listarClienteOrdenadoPornome();	
 	 
 	 @Query(nativeQuery = true,
-			 value = "select * from luispaf.cliente c\r\n"
-			 		+ "  where c.codcliente in(select p.codcliente from luispaf.pedidovendido p\r\n"
+			 value = "select * from cliente c\r\n"
+			 		+ "  where c.codcliente in(select p.codcliente from pedidovendido p\r\n"
 			 		+ "						  where 1=1\r\n"
 			 		+ "						 and DATE_FORMAT (p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
 			 		+ "						 and p.datfinalizacao is null)\r\n"
 			 		+ "order by c.nome",
-			 countQuery = "select count(*) from luispaf.cliente c\r\n"
-			 		+ "  where c.codcliente in(select p.codcliente from luispaf.pedidovendido p\r\n"
+			 countQuery = "select count(*) from cliente c\r\n"
+			 		+ "  where c.codcliente in(select p.codcliente from pedidovendido p\r\n"
 			 		+ "						  where 1=1\r\n"
 			 		+ "						 and DATE_FORMAT (p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
 			 		+ "						 and p.datfinalizacao is null)"			 

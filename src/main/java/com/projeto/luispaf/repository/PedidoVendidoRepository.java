@@ -17,11 +17,11 @@ import com.projeto.luispaf.model.PedidoVendido;
 public interface PedidoVendidoRepository  extends JpaRepository<PedidoVendido, Long>, JpaSpecificationExecutor<PedidoVendido>{
 
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.pedidovendido p\r\n"
+			 value = "SELECT * FROM pedidovendido p\r\n"
 			 		+ "  where p.status = :status  \r\n"
 			 		+ " and DATE_FORMAT(p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
 			 		+ " and  (:codigoCliente is null or p.codcliente = :codigoCliente)"	,
-			 countQuery = "SELECT count(*) FROM luispaf.pedidovendido p\r\n"
+			 countQuery = "SELECT count(*) FROM pedidovendido p\r\n"
 			 		+ "  where p.status = :status  \r\n"
 			 		+ " and DATE_FORMAT(p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
 			 		+ " and  (:codigoCliente is null or p.codcliente = :codigoCliente)"			 
@@ -29,31 +29,31 @@ public interface PedidoVendidoRepository  extends JpaRepository<PedidoVendido, L
 	 Page<PedidoVendido> listarClienteComPedidoAbertoNaDataAtual(@Param("codigoCliente") Long codigoCliente, @Param("status") String status, Pageable pageable);
 
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.pedidovendido p where p.status = 'ABERTO'"	,
-			 countQuery = "SELECT count(*) FROM luispaf.pedidovendido p where p.status = 'ABERTO'"			 
+			 value = "SELECT * FROM pedidovendido p where p.status = 'ABERTO'"	,
+			 countQuery = "SELECT count(*) FROM pedidovendido p where p.status = 'ABERTO'"			 
 			 )
 	 Page<PedidoVendido> listarPedidosAberto(Pageable pageable);
 	
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*) FROM luispaf.pedidovendido p where p.status = 'ABERTO'")
+			 value = "SELECT count(*) FROM pedidovendido p where p.status = 'ABERTO'")
 	 Long getQtdePedidosAbertos();
 	 
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.pedidovendido p where p.status = 'ABERTO'"		 
+			 value = "SELECT * FROM pedidovendido p where p.status = 'ABERTO'"		 
 			 )
 	 List<PedidoVendido> listarPedidosAberto();
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*) FROM luispaf.pedidovendido pv\r\n"
+			 value = "SELECT count(*) FROM pedidovendido pv\r\n"
 			 		+ "WHERE pv.datcriacao BETWEEN :dataInicio AND :dataFim"		 
 			 )
 	 Long getTotalProdutoVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 
 	 @Query(nativeQuery = true,
-			 value = "SELECT  coalesce(sum(p.valor), 0) FROM luispaf.pedidovendido pv\r\n"
-			 		+ "  inner join luispaf.itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
-			 		+ "   inner join luispaf.produto p on p.codproduto = ipv.codproduto\r\n"
+			 value = "SELECT  coalesce(sum(p.valor), 0) FROM pedidovendido pv\r\n"
+			 		+ "  inner join itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
+			 		+ "   inner join produto p on p.codproduto = ipv.codproduto\r\n"
 			 		+ "WHERE pv.datcriacao BETWEEN :dataInicio AND :dataFim \r\n"
 			 		+ "and pv.status in('RECEBIDO' )\r\n"
 			 		+ " and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 
@@ -63,9 +63,9 @@ public interface PedidoVendidoRepository  extends JpaRepository<PedidoVendido, L
 			 							     @Param("codigoCliente") Long codigoCliente);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT  count(*) FROM luispaf.pedidovendido pv\r\n"
-			 		+ "  inner join luispaf.itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
-			 		+ "   inner join luispaf.produto p on p.codproduto = ipv.codproduto\r\n"
+			 value = "SELECT  count(*) FROM pedidovendido pv\r\n"
+			 		+ "  inner join itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
+			 		+ "   inner join produto p on p.codproduto = ipv.codproduto\r\n"
 			 		+ "WHERE pv.datcriacao BETWEEN :dataInicio AND :dataFim \r\n"
 			 		+ "and pv.status in('RECEBIDO' )\r\n"
 			 		+ " and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 

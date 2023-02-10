@@ -12,8 +12,8 @@ import com.projeto.luispaf.model.ItemPedidoVendido;
 public interface ItemPedidoVendidoRepository extends JpaRepository<ItemPedidoVendido, Long>, JpaSpecificationExecutor<ItemPedidoVendido>{
 
 	@Query(nativeQuery = true,
-			 value = "SELECT sum(pr.valor) FROM luispaf.itempedidovendido p\r\n"
-			 		+ "  inner join luispaf.produto pr on pr.codproduto = p.codproduto\r\n"
+			 value = "SELECT sum(pr.valor) FROM itempedidovendido p\r\n"
+			 		+ "  inner join produto pr on pr.codproduto = p.codproduto\r\n"
 			 		+ " and p.codpedidovendido = :codPedidoVendido")
 	 Double getTotalItens(@Param("codPedidoVendido") Long codPedidoVendido);
 }

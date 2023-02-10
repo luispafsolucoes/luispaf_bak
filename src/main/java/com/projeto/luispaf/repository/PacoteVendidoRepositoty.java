@@ -14,14 +14,14 @@ import com.projeto.luispaf.model.PacoteVendido;
 public interface PacoteVendidoRepositoty  extends  JpaRepository<PacoteVendido, Long>, JpaSpecificationExecutor<PacoteVendido> {
 
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*) as qtdepacote FROM luispaf.pacotevendido pv\r\n"
+			 value = "SELECT count(*) as qtdepacote FROM pacotevendido pv\r\n"
 			 		+ "  WHERE pv.datinicio BETWEEN :dataInicio AND :DataFim"		 
 			 )
 	 Long getTotalPacoteVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("DataFim") Date DataFim);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT coalesce(sum(p.valor), 0)  FROM luispaf.pacotevendido pv\r\n"
-			 		+ "  inner join luispaf.pacote p on p.codpacote = pv.codpacote\r\n"
+			 value = "SELECT coalesce(sum(p.valor), 0)  FROM pacotevendido pv\r\n"
+			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
 			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"
 			 		+ "  and pv.datinicio BETWEEN :dataInicio AND :dataFim \r\n"
 			 		+ "and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 
@@ -31,8 +31,8 @@ public interface PacoteVendidoRepositoty  extends  JpaRepository<PacoteVendido, 
 			 							     @Param("codigoCliente") Long codigoCliente);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*)  FROM luispaf.pacotevendido pv\r\n"
-			 		+ "  inner join luispaf.pacote p on p.codpacote = pv.codpacote\r\n"
+			 value = "SELECT count(*)  FROM pacotevendido pv\r\n"
+			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
 			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"
 			 		+ "  and pv.datinicio BETWEEN :dataInicio AND :dataFim \r\n"
 			 		+ "and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 

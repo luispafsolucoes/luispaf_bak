@@ -14,7 +14,7 @@ import com.projeto.luispaf.model.Usuario;
 public interface UsuarioRepository  extends  JpaRepository<Usuario, Long>, JpaSpecificationExecutor<Usuario>{
 
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.usuario u \r\n"
+			 value = "SELECT * FROM usuario u \r\n"
 			 		+ "   where u.login = :usuario \r\n"
 			 		+ "and u.senha = :senha \r\n"
 			 		+ "and u.status = 'ATIVO'"		 
@@ -22,7 +22,7 @@ public interface UsuarioRepository  extends  JpaRepository<Usuario, Long>, JpaSp
 	Usuario getUsuario(@Param("usuario") String usuario, @Param("senha") String senha);
 	
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.usuario where status = 'ATIVO'"		 
+			 value = "SELECT * FROM usuario where status = 'ATIVO'"		 
 			 )
 	 List<Usuario> getUsuariosAtivos();
 }

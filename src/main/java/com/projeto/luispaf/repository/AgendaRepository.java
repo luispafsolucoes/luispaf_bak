@@ -17,7 +17,7 @@ import com.projeto.luispaf.model.Agenda;
 public interface AgendaRepository  extends JpaRepository<Agenda, Long>, JpaSpecificationExecutor<Agenda> {
 
 	@Query(nativeQuery = true,
-			 value = "SELECT count(*) FROM luispaf.agenda a\r\n"
+			 value = "SELECT count(*) FROM agenda a\r\n"
 			 		+ "  where a.codempresa = :codigoEmpresa \r\n"
 			 		+ " and a.status = :status \r\n"
 			 		+ " and a.horario = :horario \r\n"
@@ -32,7 +32,7 @@ public interface AgendaRepository  extends JpaRepository<Agenda, Long>, JpaSpeci
 			 @Param("dataAgenda") Date dataAgenda);
 	
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.agenda a\r\n"
+			 value = "SELECT * FROM agenda a\r\n"
 			 		+ "  where  DATE_FORMAT(a.datagenda ,'%d-%m-%Y') < DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
 			 		+ " and a.status = 'ATIVO'"		 
 			 )
@@ -40,8 +40,8 @@ public interface AgendaRepository  extends JpaRepository<Agenda, Long>, JpaSpeci
 	
 	
 	@Query(nativeQuery = true,
-			 value = "SELECT * FROM luispaf.agenda a where  DATE_FORMAT(a.datagenda ,'%d-%m-%Y') = DATE_FORMAT (:dataAgendamento ,'%d-%m-%Y')"	,
-			 countQuery = "SELECT count(*) FROM luispaf.agenda a where  DATE_FORMAT(a.datagenda ,'%d-%m-%Y') = DATE_FORMAT (:dataAgendamento ,'%d-%m-%Y')"			 
+			 value = "SELECT * FROM agenda a where  DATE_FORMAT(a.datagenda ,'%d-%m-%Y') = DATE_FORMAT (:dataAgendamento ,'%d-%m-%Y')"	,
+			 countQuery = "SELECT count(*) FROM agenda a where  DATE_FORMAT(a.datagenda ,'%d-%m-%Y') = DATE_FORMAT (:dataAgendamento ,'%d-%m-%Y')"			 
 			 )
 	 Page<Agenda> getAgendaPorData(@Param("dataAgendamento") Date dataAgendamento, Pageable pageable);
 	
