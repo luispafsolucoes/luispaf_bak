@@ -15,8 +15,8 @@ public interface UsuarioRepository  extends  JpaRepository<Usuario, Long>, JpaSp
 
 	@Query(nativeQuery = true,
 			 value = "SELECT * FROM usuario u \r\n"
-			 		+ "   where u.login = :usuario \r\n"
-			 		+ "and u.senha = :senha \r\n"
+			 		+ "   where BINARY u.login = :usuario \r\n"
+			 		+ "and BINARY u.senha = :senha \r\n"
 			 		+ "and u.status = 'ATIVO'"		 
 			 )
 	Usuario getUsuario(@Param("usuario") String usuario, @Param("senha") String senha);
