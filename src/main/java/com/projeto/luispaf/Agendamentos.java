@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.projeto.luispaf.model.Agenda;
 import com.projeto.luispaf.model.Usuario;
 import com.projeto.luispaf.repository.AgendaRepository;
 import com.projeto.luispaf.service.impl.UsuarioServiceImpl;
@@ -29,12 +28,13 @@ public class Agendamentos {
 	/**
 	 * Desloga o usuario a cada 3 horas
 	 */
-	/*
-	 * @Scheduled(fixedDelay = TRES_HORAS) public void deslogarUsuario() throws
-	 * InterruptedException { List<Usuario> lista =
-	 * usuarioServiceImpl.getUsuariosAtivos(); lista.forEach(usu -> {
-	 * usu.setLogado(DESLOGADO); usuarioServiceImpl.salvar(usu); }); }
-	 */
+		
+	 @Scheduled(fixedDelay = MINUTO) 
+	 public void deslogarUsuario() throws InterruptedException { 
+		 List<Usuario> lista = usuarioServiceImpl.getUsuariosAtivos(); 
+		 lista.forEach(usu -> {usu.setLogado(DESLOGADO); usuarioServiceImpl.salvar(usu); });
+	 }
+	 
 
 	/**
 	 * Inativa as agendas dos dias anteriores
