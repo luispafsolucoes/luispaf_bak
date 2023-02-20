@@ -1,5 +1,7 @@
 package com.projeto.luispaf.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,5 +158,14 @@ public class CaixaController {
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Falha ao gerar relatorioPorPeriodo:" + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
 		}		
+	}
+	
+	
+	@GetMapping("/getDataAtual")
+	public ResponseEntity<?> getDataAtual() throws Exception{		
+		Date dataAtual = caixaServiceImpl.getDataAtual();
+		SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String stringDate = DateFor.format(dataAtual);
+		return new ResponseEntity<String>(stringDate, HttpStatus.OK);
 	}
 }

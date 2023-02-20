@@ -101,4 +101,9 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 		+ "  WHERE c.databertura BETWEEN :dataInicio AND :dataFim"		 
 			 )
 	 Double getTotalcaixaPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
+	 
+	 @Query(nativeQuery = true,
+			 value = "SELECT NOW()"		 
+			 )
+	 Date getDataAtual();
 }

@@ -80,4 +80,8 @@ public class CaixaServiceImpl {
 	public Double getTotalcaixaPorPeriodo(Date dataInicio, Date DataFim) {
 		return repository.getTotalcaixaPorPeriodo(dataInicio, DataFim);
 	}
+	
+	public Date getDataAtual() {
+		return repository.getDataAtual();
+	}
 }
