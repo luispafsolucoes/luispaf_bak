@@ -21,7 +21,7 @@ public class Agendamentos {
 	private final long SEGUNDO = 1000;
 	private final long MINUTO = SEGUNDO * 60;
 	private final long HORA = MINUTO * 60;
-	private final long TRES_HORAS = HORA * 3;
+	private final long DUAS_HORAS = HORA * 2;
 
 	private static final Long DESLOGADO = 0L;
 
@@ -29,7 +29,7 @@ public class Agendamentos {
 	 * Desloga o usuario a cada 3 horas
 	 */
 		
-	 @Scheduled(fixedDelay = MINUTO) 
+	 @Scheduled(fixedDelay = DUAS_HORAS) 
 	 public void deslogarUsuario() throws InterruptedException { 
 		 List<Usuario> lista = usuarioServiceImpl.getUsuariosAtivos(); 
 		 lista.forEach(usu -> {usu.setLogado(DESLOGADO); usuarioServiceImpl.salvar(usu); });
