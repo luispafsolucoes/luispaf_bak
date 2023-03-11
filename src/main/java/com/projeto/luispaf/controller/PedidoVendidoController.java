@@ -98,7 +98,7 @@ public class PedidoVendidoController {
 	@PostMapping("/listarPedidosDodia")
 	public ResponseEntity<?> listarPedidosDodia(@RequestBody PedidoVendido entity, Pageable pageable) throws Exception {
 	   try {
-		   Page<PedidoVendido> page  = pedidoVendidoServiceImpl.listarClienteComPedidoAbertoNaDataAtual(entity.getCodigoCliente(), entity.getStatus(), pageable);				  
+		   Page<PedidoVendido> page  = pedidoVendidoServiceImpl.listarClienteComPedidoAbertoNaDataAtual(entity.getCodigoCliente(), entity.getStatus(),entity.getDataCriacao(), pageable);				  
 		   clienteServiceImpl.getClientePedidoVenda(page.getContent());
 		   return new ResponseEntity<>(page, HttpStatus.OK);			
 		} catch (Exception e) {

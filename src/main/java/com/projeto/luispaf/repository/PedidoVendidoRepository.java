@@ -19,14 +19,14 @@ public interface PedidoVendidoRepository  extends JpaRepository<PedidoVendido, L
 	@Query(nativeQuery = true,
 			 value = "SELECT * FROM pedidovendido p\r\n"
 			 		+ "  where p.status = :status  \r\n"
-			 		+ " and DATE_FORMAT(p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
+			 		+ " and  (:datCreate is null or p.datcriacao = :datCreate)"	
 			 		+ " and  (:codigoCliente is null or p.codcliente = :codigoCliente)"	,
 			 countQuery = "SELECT count(*) FROM pedidovendido p\r\n"
 			 		+ "  where p.status = :status  \r\n"
-			 		+ " and DATE_FORMAT(p.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
+			 		+ " and  (:datCreate is null or p.datcriacao = :datCreate)"	
 			 		+ " and  (:codigoCliente is null or p.codcliente = :codigoCliente)"			 
 			 )
-	 Page<PedidoVendido> listarClienteComPedidoAbertoNaDataAtual(@Param("codigoCliente") Long codigoCliente, @Param("status") String status, Pageable pageable);
+	 Page<PedidoVendido> listarClienteComPedidoAbertoNaDataAtual(@Param("codigoCliente") Long codigoCliente, @Param("status") String status, @Param("datCreate") Date datCreate, Pageable pageable);
 
 	@Query(nativeQuery = true,
 			 value = "SELECT * FROM pedidovendido p where p.status = 'ABERTO'"	,

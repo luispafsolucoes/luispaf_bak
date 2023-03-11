@@ -64,8 +64,8 @@ public class PedidoVendidoServiceImpl implements PedidoVendidoService{
 		return null;
 	}	
 	
-	public Page<PedidoVendido> listarClienteComPedidoAbertoNaDataAtual(Long codigoCliente, String status, Pageable pageable) {
-		return repository.listarClienteComPedidoAbertoNaDataAtual(codigoCliente, status, pageable);
+	public Page<PedidoVendido> listarClienteComPedidoAbertoNaDataAtual(Long codigoCliente, String status, Date datCreate, Pageable pageable) {
+		return repository.listarClienteComPedidoAbertoNaDataAtual(codigoCliente, status, datCreate, pageable);
 	}
 	
 	public  Page<PedidoVendido> listarPedidosAberto(Pageable pageable) {
