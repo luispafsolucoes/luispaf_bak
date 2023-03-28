@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.projeto.luispaf.model.PedidoVendido;
-import com.projeto.luispaf.repository.ClienteRepository;
 import com.projeto.luispaf.repository.PedidoVendidoRepository;
 import com.projeto.luispaf.service.PedidoVendidoService;
 import com.projeto.luispaf.service.impl.CaixaServiceImpl;
@@ -39,8 +37,8 @@ public class PedidoVendidoController {
 	ItemPedidoVendidoServiceImpl itemPedidoVendidoServiceImpl;	
 	@Autowired
 	ClienteServiceImpl clienteServiceImpl;	
-	@Autowired
-	ClienteRepository clienteRepository;	
+	//@Autowired
+	//ClienteRepository clienteRepository;	
 	@Autowired
 	PedidoVendidoServiceImpl pedidoVendidoServiceImpl;
 	@Autowired
@@ -79,7 +77,8 @@ public class PedidoVendidoController {
 	@PostMapping("/salvar")
 	public ResponseEntity<?> salvar(@RequestBody PedidoVendido entity) throws Exception {	
 		try {	
-			Long qtdeCaixaAbertoDataAtual = caixaServiceImpl.getQtdeCaixaAbertoDataAtua();
+			// Pego a data inicio, porem ela tem ser sempre a data atual vindo do front
+			Long qtdeCaixaAbertoDataAtual = caixaServiceImpl.getQtdeCaixaAbertoDataAtua(entity.getDataCriacao());
 			
 			if (qtdeCaixaAbertoDataAtual > 0) {
 				PedidoVendido pedidoVendidoSalvo = service.salvar(entity);

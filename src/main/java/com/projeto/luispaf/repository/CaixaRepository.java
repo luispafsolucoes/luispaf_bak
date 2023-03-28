@@ -18,45 +18,45 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pacotevendido pv\r\n"
 			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
 			 		+ " and pv.status in('ATIVO', 'FINALIZADO')\r\n"
-			 		+ " and  DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')"		 
+			 		+ " and  DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
 			 )
-	 Double getTotalPacoteDoDia();
+	 Double getTotalPacoteDoDia(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pedidovendido pv\r\n"
 			 		+ "  inner join itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
 			 		+ "  inner join produto p on p.codproduto = ipv.codproduto\r\n"
 			 		+ " and pv.status = 'RECEBIDO' \r\n"
-			 		+ " and  DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')"		 
+			 		+ " and  DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
 			 )
-	 Double getTotalprodutoDoDia();
+	 Double getTotalprodutoDoDia(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')"		 
+			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
 			 )
-	 Long getQtdeCaixaCriadoDataAtual();
+	 Long getQtdeCaixaCriadoDataAtual(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
+			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (:dataAtual ,'%d-%m-%Y')\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
-	 Long getQtdeCaixaAbertoOutrasDatas();
+	 Long getQtdeCaixaAbertoOutrasDatas(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
+			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
-	 Long getQtdeCaixaAbertoDataAtua();
+	 Long getQtdeCaixaAbertoDataAtua(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT * FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (current_date() ,'%d-%m-%Y')\r\n"
+			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (:dataAbertura ,'%d-%m-%Y')\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
-	 List<Caixa> getCaixasBertoDatasAnteriores();
+	 List<Caixa> getCaixasBertoDatasAnteriores(@Param("dataAbertura") Date dataAbertura);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pacotevendido pv\r\n"
@@ -77,14 +77,15 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT * FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (current_date() ,'%d-%m-%Y')"		 
+			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAbertura ,'%d-%m-%Y')"		 
 			 )
-	 Caixa getCaixaAbertoDoDia();
+	 Caixa getCaixaAbertoDoDia(@Param("dataAbertura") Date dataAbertura);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalproduto) as totalproduto \r\n"
 			 		+ "   FROM caixa c \r\n"
-			 		+ "  WHERE c.databertura BETWEEN :dataInicio AND :dataFim"		 
+					+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
+					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
 			 )
 	 Double getTotalprodutoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 

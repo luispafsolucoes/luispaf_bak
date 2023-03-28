@@ -15,7 +15,8 @@ public interface PacoteVendidoRepositoty  extends  JpaRepository<PacoteVendido, 
 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) as qtdepacote FROM pacotevendido pv\r\n"
-			 		+ "  WHERE pv.datinicio BETWEEN :dataInicio AND :DataFim"		 
+					+ "WHERE DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
+					+ " and DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') <= DATE_FORMAT(:DataFim ,'%d-%m-%Y')"
 			 )
 	 Long getTotalPacoteVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("DataFim") Date DataFim);
 	 

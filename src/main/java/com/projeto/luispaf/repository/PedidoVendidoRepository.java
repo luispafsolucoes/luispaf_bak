@@ -46,7 +46,8 @@ public interface PedidoVendidoRepository  extends JpaRepository<PedidoVendido, L
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM pedidovendido pv\r\n"
-			 		+ "WHERE pv.datcriacao BETWEEN :dataInicio AND :dataFim"		 
+			 		+ "WHERE DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
+			 		+ " and DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"					
 			 )
 	 Long getTotalProdutoVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 

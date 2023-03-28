@@ -15,38 +15,38 @@ public class CaixaServiceImpl {
 	@Autowired
 	CaixaRepository repository;
 	
-	public Double getTotalPacoteDoDia() {
-		return repository.getTotalPacoteDoDia();
+	public Double getTotalPacoteDoDia(Date dataAtual) {
+		return repository.getTotalPacoteDoDia(dataAtual);
 	}
 	
-	public Double getTotalprodutoDoDia() {
-		return repository.getTotalprodutoDoDia();
+	public Double getTotalprodutoDoDia(Date dataAtual) {
+		return repository.getTotalprodutoDoDia(dataAtual);
 	}
 	
-	public Double getTotalCaixaDoDia() {
-		Double totalPacote = repository.getTotalPacoteDoDia();
-		Double totalPedido = repository.getTotalprodutoDoDia();
+	public Double getTotalCaixaDoDia(Date dataAtual) {
+		Double totalPacote = repository.getTotalPacoteDoDia(dataAtual);
+		Double totalPedido = repository.getTotalprodutoDoDia(dataAtual);
 		return Double.sum(totalPacote, totalPedido);
 	}
 	
-	public Long getQtdeCaixaCriadoDataAtual() {
-		return repository.getQtdeCaixaCriadoDataAtual();
+	public Long getQtdeCaixaCriadoDataAtual(Date dataAtual) {
+		return repository.getQtdeCaixaCriadoDataAtual(dataAtual);
 	}
 
 	public Caixa salvar(Caixa caixa) {
 		return repository.save(caixa);
 	}
 	
-	public Long getQtdeCaixaAbertoOutrasDatas() {
-		return repository.getQtdeCaixaAbertoOutrasDatas();
+	public Long getQtdeCaixaAbertoOutrasDatas(Date dataAtual) {
+		return repository.getQtdeCaixaAbertoOutrasDatas(dataAtual);
 	}
 	
-	public Long getQtdeCaixaAbertoDataAtua() {
-		return repository.getQtdeCaixaAbertoDataAtua();
+	public Long getQtdeCaixaAbertoDataAtua(Date dataAtual) {
+		return repository.getQtdeCaixaAbertoDataAtua(dataAtual);
 	}
 	
-	public List<Caixa> getCaixasBertoDatasAnteriores() {
-		List<Caixa> lista = repository.getCaixasBertoDatasAnteriores();
+	public List<Caixa> getCaixasBertoDatasAnteriores(Date dataAbertura) {
+		List<Caixa> lista = repository.getCaixasBertoDatasAnteriores(dataAbertura);
 		lista.forEach(caixa -> {
 			Double totProduto = repository.getTotalproduto(caixa.getDataAbertura());
 			Double totPacote = repository.getTotalPacote(caixa.getDataAbertura());
@@ -57,8 +57,8 @@ public class CaixaServiceImpl {
 		return lista;
 	}
 	
-	public Caixa getCaixaAbertoDoDia() {
-		return repository.getCaixaAbertoDoDia();
+	public Caixa getCaixaAbertoDoDia(Date dataAbertura) {
+		return repository.getCaixaAbertoDoDia(dataAbertura);
 	}
 	
 	public Double getTotalPacote(Date dataCaixa) {

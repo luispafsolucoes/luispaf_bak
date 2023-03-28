@@ -39,8 +39,8 @@ public class CaixaController {
 	
 	@PostMapping("/salvar")
 	public ResponseEntity<?> salvar(@RequestBody Caixa caixa) throws Exception {
-		Long qtdeCaixaDoDia = caixaServiceImpl.getQtdeCaixaCriadoDataAtual();
-		Long qtdeCaixaAbertoOutrasDatas = caixaServiceImpl.getQtdeCaixaAbertoOutrasDatas();
+		Long qtdeCaixaDoDia = caixaServiceImpl.getQtdeCaixaCriadoDataAtual(caixa.getDataAbertura());
+		Long qtdeCaixaAbertoOutrasDatas = caixaServiceImpl.getQtdeCaixaAbertoOutrasDatas(caixa.getDataAbertura());
 		
 		if (qtdeCaixaAbertoOutrasDatas == 0) {
 			if (qtdeCaixaDoDia == 0) {
@@ -92,34 +92,70 @@ public class CaixaController {
 		return new ResponseEntity<>(caixaSalvo, HttpStatus.OK);
 	}
 	
-	@GetMapping("/totalPacoteDoDia")
-	public ResponseEntity<?> getTotalPacoteDoDia() throws Exception{
-		Double totalPacoteDia = caixaServiceImpl.getTotalPacoteDoDia();
-		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
-	}
+	/*
+	 * @GetMapping("/totalPacoteDoDia") public ResponseEntity<?>
+	 * getTotalPacoteDoDia() throws Exception{ Double totalPacoteDia =
+	 * caixaServiceImpl.getTotalPacoteDoDia(); return new
+	 * ResponseEntity<>(totalPacoteDia, HttpStatus.OK); }
+	 */
 	
-	@GetMapping("/totalprodutoDoDia")
-	public ResponseEntity<?> getTotalprodutoDoDia() throws Exception{
-		Double totalPacoteDia = caixaServiceImpl.getTotalprodutoDoDia();
-		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
-	}
+//	@GetMapping("/totalprodutoDoDia")
+//	public ResponseEntity<?> getTotalprodutoDoDia() throws Exception{
+//		Double totalPacoteDia = caixaServiceImpl.getTotalprodutoDoDia();
+//		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
+//	}
 	
-	@GetMapping("/totalcaixa")
-	public ResponseEntity<?> getTotalcaixaDoDia() throws Exception{
-		Double totalPacoteDia = caixaServiceImpl.getTotalCaixaDoDia();
-		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
-	}
+//	@GetMapping("/totalcaixa")
+//	public ResponseEntity<?> getTotalcaixaDoDia() throws Exception{
+//		Double totalPacoteDia = caixaServiceImpl.getTotalCaixaDoDia();
+//		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
+//	}
 		
-	@GetMapping("/caixasBertoDatasAnteriores")
-	public ResponseEntity<?> getCaixasBertoDatasAnteriores() throws Exception{
-		List<Caixa> lista = caixaServiceImpl.getCaixasBertoDatasAnteriores();
-		return new ResponseEntity<>(lista, HttpStatus.OK);
-	}	
+	/*
+	 * @GetMapping("/caixasBertoDatasAnteriores") public ResponseEntity<?>
+	 * getCaixasBertoDatasAnteriores() throws Exception{ List<Caixa> lista =
+	 * caixaServiceImpl.getCaixasBertoDatasAnteriores(); return new
+	 * ResponseEntity<>(lista, HttpStatus.OK); }
+	 */
 	
-	@GetMapping("/caixaAbertoDoDia")
-	public ResponseEntity<?> getCaixaAbertoDoDia() throws Exception{
+//	@GetMapping("/caixaAbertoDoDia")
+//	public ResponseEntity<?> getCaixaAbertoDoDia() throws Exception{
+//		try {
+//			Caixa caixa = caixaServiceImpl.getCaixaAbertoDoDia();
+//			return new ResponseEntity<>(caixa, HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<String>("Falha ao buscar caixa aberto do dia:" + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+//		}		
+//	}	
+	
+	@PostMapping("/totalprodutoDoDia")
+	public ResponseEntity<?> getTotalprodutoDoDia(@RequestBody Caixa caixaFiltro) throws Exception{
+		Double totalPacoteDia = caixaServiceImpl.getTotalprodutoDoDia(caixaFiltro.getDataAbertura());
+		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
+	}
+	
+	@PostMapping("/totalcaixa")
+	public ResponseEntity<?> getTotalcaixaDoDia(@RequestBody Caixa caixaFiltro) throws Exception{
+		Double totalPacoteDia = caixaServiceImpl.getTotalCaixaDoDia(caixaFiltro.getDataAbertura());
+		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
+	}
+	
+	@PostMapping("/totalPacoteDoDia")
+	public ResponseEntity<?> getTotalPacoteDoDia(@RequestBody Caixa caixaFiltro) throws Exception{
+		Double totalPacoteDia = caixaServiceImpl.getTotalPacoteDoDia(caixaFiltro.getDataAbertura());
+		return new ResponseEntity<>(totalPacoteDia, HttpStatus.OK);
+	}
+	
+	@PostMapping("/caixasBertoDatasAnteriores")
+	public ResponseEntity<?> getCaixasBertoDatasAnteriores(@RequestBody Caixa caixaFiltro) throws Exception{
+		List<Caixa> lista = caixaServiceImpl.getCaixasBertoDatasAnteriores(caixaFiltro.getDataAbertura());
+		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@PostMapping("/caixaAbertoDoDia")
+	public ResponseEntity<?> getCaixaAbertoDoDia(@RequestBody Caixa caixaFiltro) throws Exception{
 		try {
-			Caixa caixa = caixaServiceImpl.getCaixaAbertoDoDia();
+			Caixa caixa = caixaServiceImpl.getCaixaAbertoDoDia(caixaFiltro.getDataAbertura());
 			return new ResponseEntity<>(caixa, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Falha ao buscar caixa aberto do dia:" + e.getMessage(), HttpStatus.EXPECTATION_FAILED);

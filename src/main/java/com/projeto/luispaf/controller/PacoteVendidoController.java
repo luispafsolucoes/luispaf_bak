@@ -40,7 +40,8 @@ public class PacoteVendidoController {
 	@PostMapping("/salvar")
 	public ResponseEntity<?> salvar(@RequestBody PacoteVendido entity) throws Exception {	
 		try {	
-			Long qtdeCaixaAbertoDataAtual = caixaServiceImpl.getQtdeCaixaAbertoDataAtua();
+			// Pego a data inicio, porem ela tem ser sempre a data atual vindo do front
+			Long qtdeCaixaAbertoDataAtual = caixaServiceImpl.getQtdeCaixaAbertoDataAtua(entity.getDataInicio());
 			
 			if (qtdeCaixaAbertoDataAtual > 0) {
 				PacoteVendido pacoteVendidoSalvo = service.salvar(entity);
