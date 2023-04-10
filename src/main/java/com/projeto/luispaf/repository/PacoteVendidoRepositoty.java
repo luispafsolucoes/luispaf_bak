@@ -14,17 +14,18 @@ import com.projeto.luispaf.model.PacoteVendido;
 public interface PacoteVendidoRepositoty  extends  JpaRepository<PacoteVendido, Long>, JpaSpecificationExecutor<PacoteVendido> {
 
 	 @Query(nativeQuery = true,
-			 value = "SELECT count(*) as qtdepacote FROM pacotevendido pv\r\n"
-					+ "WHERE DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
-					+ " and DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') <= DATE_FORMAT(:DataFim ,'%d-%m-%Y')"
+			 value = "SELECT count(*) as qtdepacote FROM pacotevendido pv\r\n"					
+					+ "WHERE date(pv.datinicio) >= date(:dataInicio) "
+					+ " and date(pv.datinicio) <= date(:dataFim)"
 			 )
-	 Long getTotalPacoteVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("DataFim") Date DataFim);
+	 Long getTotalPacoteVendidoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT coalesce(sum(p.valor), 0)  FROM pacotevendido pv\r\n"
 			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
-			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"
-			 		+ "  and pv.datinicio BETWEEN :dataInicio AND :dataFim \r\n"
+			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"			 		
+					+ " and date(pv.datinicio) >= date(:dataInicio) "
+					+ " and date(pv.datinicio) <= date(:dataFim)"			 		
 			 		+ "and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 
 			 )
 	 Double getValorPacotePorClienteEPeriodo(@Param("dataInicio") Date dataInicio, 
@@ -34,8 +35,9 @@ public interface PacoteVendidoRepositoty  extends  JpaRepository<PacoteVendido, 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*)  FROM pacotevendido pv\r\n"
 			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
-			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"
-			 		+ "  and pv.datinicio BETWEEN :dataInicio AND :dataFim \r\n"
+			 		+ " where pv.status in('ATIVO','FINALIZADO') \r\n"			 		
+					+ " and date(pv.datinicio) >= date(:dataInicio) "
+					+ " and date(pv.datinicio) <= date(:dataFim)"			 		
 			 		+ "and (:codigoCliente is null or pv.codcliente = :codigoCliente)"		 
 			 )
 	 Long getQtdePacotePorClienteEPeriodo(@Param("dataInicio") Date dataInicio, 

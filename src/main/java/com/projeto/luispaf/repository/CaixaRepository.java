@@ -18,7 +18,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pacotevendido pv\r\n"
 			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
 			 		+ " and pv.status in('ATIVO', 'FINALIZADO')\r\n"
-			 		+ " and  DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
+			 		+ " and  date(pv.datinicio) = date(:dataAtual)"		 
 			 )
 	 Double getTotalPacoteDoDia(@Param("dataAtual") Date dataAtual);
 	 
@@ -27,33 +27,33 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 		+ "  inner join itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
 			 		+ "  inner join produto p on p.codproduto = ipv.codproduto\r\n"
 			 		+ " and pv.status = 'RECEBIDO' \r\n"
-			 		+ " and  DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
+			 		+ " and  date(pv.datcriacao) = date(:dataAtual)"		 
 			 )
 	 Double getTotalprodutoDoDia(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')"		 
+			 		+ "  where  date(c.databertura) = date(:dataAtual)"		 
 			 )
 	 Long getQtdeCaixaCriadoDataAtual(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (:dataAtual ,'%d-%m-%Y')\r\n"
+			 		+ "  where  date(c.databertura) != date(:dataAtual)\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
 	 Long getQtdeCaixaAbertoOutrasDatas(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT count(*) FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAtual ,'%d-%m-%Y')\r\n"
+			 		+ "  where  date(c.databertura) = date(:dataAtual)\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
 	 Long getQtdeCaixaAbertoDataAtua(@Param("dataAtual") Date dataAtual);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT * FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') != DATE_FORMAT (:dataAbertura ,'%d-%m-%Y')\r\n"
+			 		+ "  where  date(c.databertura) != date(:dataAbertura)\r\n"
 			 		+ " and c.status = 'ABERTO'"		 
 			 )
 	 List<Caixa> getCaixasBertoDatasAnteriores(@Param("dataAbertura") Date dataAbertura);
@@ -62,7 +62,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pacotevendido pv\r\n"
 			 		+ "  inner join pacote p on p.codpacote = pv.codpacote\r\n"
 			 		+ " and pv.status in('ATIVO', 'FINALIZADO')\r\n"
-			 		+ " and  DATE_FORMAT(pv.datinicio ,'%d-%m-%Y') = DATE_FORMAT (:dataCaixa ,'%d-%m-%Y')"		 
+			 		+ " and  date(pv.datinicio) = date(:dataCaixa)"		 
 			 )
 	 Double getTotalPacote(@Param("dataCaixa") Date dataCaixa);
 	 
@@ -70,38 +70,38 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 			 value = "SELECT coalesce(sum(p.valor), 0) FROM pedidovendido pv\r\n"
 			 		+ "  inner join itempedidovendido ipv on ipv.codpedidovendido = pv.codpedidovendido\r\n"
 			 		+ "  inner join produto p on p.codproduto = ipv.codproduto\r\n"
-			 		+ " and pv.status = 'RECEBIDO' \r\n"
-			 		+ " and  DATE_FORMAT(pv.datcriacao ,'%d-%m-%Y') = DATE_FORMAT (:dataCaixa ,'%d-%m-%Y')"		 
+			 		+ " and pv.status = 'RECEBIDO' \r\n"	
+			 		+ " and date(pv.datcriacao) = date(:dataCaixa)"
 			 )
 	 Double getTotalproduto(@Param("dataCaixa") Date dataCaixa);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT * FROM caixa c \r\n"
-			 		+ "  where  DATE_FORMAT(c.databertura ,'%d-%m-%Y') = DATE_FORMAT (:dataAbertura ,'%d-%m-%Y')"		 
+			 		+ "  where  date(c.databertura) = date(:dataAbertura)"		 
 			 )
 	 Caixa getCaixaAbertoDoDia(@Param("dataAbertura") Date dataAbertura);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalproduto) as totalproduto \r\n"
-			 		+ "   FROM caixa c \r\n"
-					+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
-					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
+			 		+ "   FROM caixa c \r\n"					
+					+ "WHERE date(c.databertura) >= date(:dataInicio) "
+					+ " and date(c.databertura) <= date(:dataFim)"
 			 )
 	 Double getTotalprodutoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalpacote) as totalproduto \r\n"
-			 		+ "   FROM caixa c \r\n"			 		
-			 		+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
-					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
+			 		+ "   FROM caixa c \r\n"			 					 		
+					+ "WHERE date(c.databertura) >= date(:dataInicio) "
+					+ " and date(c.databertura) <= date(:dataFim)"
 			 )
 	 Double getTotalpacotePorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalcaixa) as totalproduto \r\n"
-			 		+ "   FROM caixa c \r\n"			 		
-					+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
-					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
+			 		+ "   FROM caixa c \r\n"			 							
+					+ "WHERE date(c.databertura) >= date(:dataInicio) "
+					+ " and date(c.databertura) <= date(:dataFim)"
 			 )
 	 Double getTotalcaixaPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
