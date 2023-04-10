@@ -91,15 +91,17 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalpacote) as totalproduto \r\n"
-			 		+ "   FROM caixa c \r\n"
-			 		+ "  WHERE c.databertura BETWEEN :dataInicio AND :dataFim"		 
+			 		+ "   FROM caixa c \r\n"			 		
+			 		+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
+					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
 			 )
 	 Double getTotalpacotePorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
 			 value = "SELECT sum(c.totalcaixa) as totalproduto \r\n"
-			 		+ "   FROM caixa c \r\n"
-			 		+ "  WHERE c.databertura BETWEEN :dataInicio AND :dataFim"		 
+			 		+ "   FROM caixa c \r\n"			 		
+					+ " WHERE DATE_FORMAT(c.databertura ,'%d-%m-%Y') >= DATE_FORMAT(:dataInicio ,'%d-%m-%Y') "
+					+ " and DATE_FORMAT(c.databertura ,'%d-%m-%Y') <= DATE_FORMAT(:dataFim ,'%d-%m-%Y')"
 			 )
 	 Double getTotalcaixaPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
