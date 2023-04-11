@@ -82,7 +82,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 Caixa getCaixaAbertoDoDia(@Param("dataAbertura") Date dataAbertura);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT sum(c.totalproduto) as totalproduto \r\n"
+			 value = "SELECT coalesce(sum(c.totalproduto), 0) as totalproduto \r\n"
 			 		+ "   FROM caixa c \r\n"					
 					+ "WHERE date(c.databertura) >= date(:dataInicio) "
 					+ " and date(c.databertura) <= date(:dataFim)"
@@ -90,7 +90,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 Double getTotalprodutoPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT sum(c.totalpacote) as totalproduto \r\n"
+			 value = "SELECT coalesce(sum(c.totalpacote), 0) as totalproduto \r\n"
 			 		+ "   FROM caixa c \r\n"			 					 		
 					+ "WHERE date(c.databertura) >= date(:dataInicio) "
 					+ " and date(c.databertura) <= date(:dataFim)"
@@ -98,7 +98,7 @@ public interface CaixaRepository  extends JpaRepository<Caixa, Long>, JpaSpecifi
 	 Double getTotalpacotePorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 	 
 	 @Query(nativeQuery = true,
-			 value = "SELECT sum(c.totalcaixa) as totalproduto \r\n"
+			 value = "SELECT coalesce(sum(c.totalcaixa), 0) as totalproduto \r\n"
 			 		+ "   FROM caixa c \r\n"			 							
 					+ "WHERE date(c.databertura) >= date(:dataInicio) "
 					+ " and date(c.databertura) <= date(:dataFim)"
